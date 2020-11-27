@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Gma.System.MouseKeyHook;
 
 namespace SimplifiedChineseSwitch
 {
@@ -22,9 +23,21 @@ namespace SimplifiedChineseSwitch
         private const string _statusSim = "現在是簡體";
         private const string _statusNotFound = "找不到新注音內?";
 
+        private IKeyboardMouseEvents _globalHook;
+
         public SimplifiedChineseSwitch()
         {
             InitializeComponent();
+            SubscribeKeyboardEvents();
+        }
+
+        private void SubscribeKeyboardEvents()
+        {
+            _globalHook = Hook.GlobalEvents();
+            _globalHook.OnCombination(new Dictionary<Combination, Action>
+            {
+                {Combination.FromString("Alt+Scroll"), Switch }
+            });
         }
 
         private void SimplifiedChineseSwitch_Load(object sender, EventArgs e)

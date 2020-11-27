@@ -36,14 +36,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_status
             // 
             this.lbl_status.AutoSize = true;
-            this.lbl_status.Location = new System.Drawing.Point(93, 17);
+            this.lbl_status.Location = new System.Drawing.Point(93, 16);
             this.lbl_status.Name = "lbl_status";
-            this.lbl_status.Size = new System.Drawing.Size(13, 13);
+            this.lbl_status.Size = new System.Drawing.Size(10, 12);
             this.lbl_status.TabIndex = 2;
             this.lbl_status.Text = "?";
             // 
@@ -55,9 +56,9 @@
             // 
             // btn_Switch
             // 
-            this.btn_Switch.Location = new System.Drawing.Point(12, 12);
+            this.btn_Switch.Location = new System.Drawing.Point(12, 11);
             this.btn_Switch.Name = "btn_Switch";
-            this.btn_Switch.Size = new System.Drawing.Size(75, 23);
+            this.btn_Switch.Size = new System.Drawing.Size(75, 21);
             this.btn_Switch.TabIndex = 3;
             this.btn_Switch.Text = "Switch";
             this.btn_Switch.UseVisualStyleBackColor = true;
@@ -66,35 +67,45 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 38);
+            this.label1.Location = new System.Drawing.Point(12, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 13);
+            this.label1.Size = new System.Drawing.Size(125, 12);
             this.label1.TabIndex = 4;
             this.label1.Text = "最小化將隱藏至系統列";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 55);
+            this.label2.Location = new System.Drawing.Point(12, 51);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(225, 13);
+            this.label2.Size = new System.Drawing.Size(230, 12);
             this.label2.TabIndex = 5;
-            this.label2.Text = "左鍵點擊系統列Icon可快速切換正體/簡體";
+            this.label2.Text = "快速切換正體/簡體 : 1. 左鍵點擊系統列Icon";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 72);
+            this.label3.Location = new System.Drawing.Point(12, 82);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(172, 13);
+            this.label3.Size = new System.Drawing.Size(167, 12);
             this.label3.TabIndex = 6;
-            this.label3.Text = "右鍵點擊系統列Icon可叫出視窗";
+            this.label3.Text = "叫出視窗 : 右鍵點擊系統列Icon";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(120, 67);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(91, 12);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "2. Alt+Scroll Lock";
             // 
             // SimplifiedChineseSwitch
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 91);
+            this.ClientSize = new System.Drawing.Size(264, 101);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -120,6 +131,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

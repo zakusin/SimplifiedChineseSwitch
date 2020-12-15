@@ -41,9 +41,9 @@ namespace SimplifiedChineseSwitch
                 {Combination.FromString("Alt+CapsLock"), ()=>
                     {
                         Switch();
-                        var currentProcessName = GetForegroundProcessName();
+                        var processId = GetForegroundProcessId();
                         Activate();
-                        FocusProcess(currentProcessName);
+                        FocusProcess(processId);
                     }
                 }
             });
@@ -115,7 +115,7 @@ namespace SimplifiedChineseSwitch
 
             return nowStatus;
         }
-                
+
         private void Switch()
         {
             var nowValue = GetRegValue();
@@ -205,7 +205,7 @@ namespace SimplifiedChineseSwitch
         {
             HideMe();
         }
-        
+
         private void noti_icon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -230,16 +230,12 @@ namespace SimplifiedChineseSwitch
         private static extern int GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         // Returns the name of the process owning the foreground window.
-        private string GetForegroundProcessName()
+        private int GetForegroundProcessId()
         {
             var hwnd = GetForegroundWindow();
-
             GetWindowThreadProcessId(hwnd, out var pid);
-            var processes = System.Diagnostics.Process.GetProcesses().AsEnumerable();
 
-            var currentProcessName = processes.FirstOrDefault(r=>r.Id == pid)?.ProcessName ?? "Unknown";
-
-            return currentProcessName;
+            return (int)pid;
         }
 
         [DllImport("user32.dll")]
@@ -249,16 +245,13 @@ namespace SimplifiedChineseSwitch
 
         public const int SW_SHOW = 5;
 
-        private void FocusProcess(string procName)
+        private void FocusProcess(int pid)
         {
-            Process[] objProcesses = System.Diagnostics.Process.GetProcessesByName(procName);
-            if (objProcesses.Length > 0)
-            {
-                IntPtr hWnd = IntPtr.Zero;
-                hWnd = objProcesses[0].MainWindowHandle;
-                ShowWindowAsync(new HandleRef(null, hWnd), SW_SHOW);
-                SetForegroundWindow(objProcesses[0].MainWindowHandle);
-            }
+            var processById = System.Diagnostics.Process.GetProcessById(pid);
+            IntPtr hWnd = IntPtr.Zero;
+            hWnd = processById.MainWindowHandle;
+            ShowWindowAsync(new HandleRef(null, hWnd), SW_SHOW);
+            SetForegroundWindow(processById.MainWindowHandle);
         }
     }
 }

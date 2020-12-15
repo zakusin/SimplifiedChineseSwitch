@@ -96,9 +96,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(120, 67);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 12);
+            this.label4.Size = new System.Drawing.Size(84, 12);
             this.label4.TabIndex = 7;
-            this.label4.Text = "2. Alt+Scroll Lock";
+            this.label4.Text = "2. Alt+CapsLock";
             // 
             // SimplifiedChineseSwitch
             // 

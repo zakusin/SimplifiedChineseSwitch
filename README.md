@@ -3,4 +3,4 @@
 ***
 執行需要Admin權限，直接修改登錄檔達成正體/簡體切換
 <br>
-切換快捷鍵 : Alt+Scroll Lock
+切換快捷鍵 : Alt+CapsLock

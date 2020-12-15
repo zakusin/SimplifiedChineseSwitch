@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -36,7 +38,14 @@ namespace SimplifiedChineseSwitch
             _globalHook = Hook.GlobalEvents();
             _globalHook.OnCombination(new Dictionary<Combination, Action>
             {
-                {Combination.FromString("Alt+Scroll"), Switch }
+                {Combination.FromString("Alt+CapsLock"), ()=>
+                    {
+                        Switch();
+                        var currentProcessName = GetForegroundProcessName();
+                        Activate();
+                        FocusProcess(currentProcessName);
+                    }
+                }
             });
         }
 
@@ -206,6 +215,49 @@ namespace SimplifiedChineseSwitch
             else if (e.Button == MouseButtons.Right)
             {
                 ShowMe();
+            }
+        }
+
+        // The GetForegroundWindow function returns a handle to the foreground window
+        // (the window  with which the user is currently working).
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        // The GetWindowThreadProcessId function retrieves the identifier of the thread
+        // that created the specified window and, optionally, the identifier of the
+        // process that created the window.
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern int GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        // Returns the name of the process owning the foreground window.
+        private string GetForegroundProcessName()
+        {
+            var hwnd = GetForegroundWindow();
+
+            GetWindowThreadProcessId(hwnd, out var pid);
+            var processes = System.Diagnostics.Process.GetProcesses().AsEnumerable();
+
+            var currentProcessName = processes.FirstOrDefault(r=>r.Id == pid)?.ProcessName ?? "Unknown";
+
+            return currentProcessName;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindowAsync(HandleRef hWnd, int nCmdShow);
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr WindowHandle);
+
+        public const int SW_SHOW = 5;
+
+        private void FocusProcess(string procName)
+        {
+            Process[] objProcesses = System.Diagnostics.Process.GetProcessesByName(procName);
+            if (objProcesses.Length > 0)
+            {
+                IntPtr hWnd = IntPtr.Zero;
+                hWnd = objProcesses[0].MainWindowHandle;
+                ShowWindowAsync(new HandleRef(null, hWnd), SW_SHOW);
+                SetForegroundWindow(objProcesses[0].MainWindowHandle);
             }
         }
     }
